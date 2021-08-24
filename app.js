@@ -4,7 +4,9 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
-const userInfo = require('./model/useData')
+
+
+let User = require('./db');
 
 var app = express();
 
@@ -27,23 +29,42 @@ app.get('/', function(req, res, next) {
  
 });
 
-app.post('/msg', function(req, res) {
-  console.log(req.body)
+// app.post('/msg', function(req, res) {
+//   console.log(req.body)
 
-  userInfo.create({
-    name: req.body.name,
-    usermsg: req.body.usermsg
-  })
+//   userInfo.create({
+//     name: req.body.name,
+//     usermsg: req.body.usermsg
+//   })
 
 
   
-});
+// });
 
 
-app.post('/forum', function(req, res) {
-  res.render('forum');
+// app.post('/forum', function(req, res) {
+//   res.render('forum');
  
-});
+// });
+
+app.use('/Ureview', (req, res) => {
+	var newUser = new User ({
+		name: req.body.name,
+		suggestions: req.body.suggestions
+	    });
+
+      newUser.save( (err) => { 
+		if (err) {
+		    res.type('html').status(500);
+		    res.send('Error: ' + err);
+		}
+		else {
+		   res.redirect("/")
+		}
+	    } ); 
+
+    });
+
 
 
 // catch 404 and forward to error handler
