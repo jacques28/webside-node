@@ -6,7 +6,7 @@ const logger = require('morgan');
 const bodyParser = require('body-parser');
 
 
-let User = require('./db');
+//let User = require('./db');
 
 var app = express();
 
