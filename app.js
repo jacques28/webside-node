@@ -5,6 +5,8 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
 const nodemailer = require("nodemailer");
+// const helmet = require('helmet');
+// const cors = require('cors');
 
 
 
@@ -15,6 +17,11 @@ var app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+
+// app.use(cors({
+//   origin: process.env.CORS_ORIGIN,
+// }))
+// app.use(helmet());
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -54,8 +61,8 @@ app.post('/send', function(req, res, next) {
     port: 587,
     secure: false, // true for 465, false for other ports
     auth: {
-        user: 'adissoujack@gmail.com', // generated ethereal user
-        pass: 'qaeb rzqm eqpk vyrw'  // generated ethereal password
+        user: process.env.USER_SEND_EMAIL, // generated ethereal user
+        pass: process.env.NODEMAILER_GMAIL_PASSWORD  // generated ethereal password
     },
     tls:{
       rejectUnauthorized:false
